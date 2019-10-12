@@ -1,33 +1,33 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-from scipy import misc
 from PIL import Image
 import binascii
+import imageio
 img = cv2.imread('lena512color.jpg',0)
-#histo = plt.hist(img.ravel(),256,[0,256]); plt.show()
+histo = plt.hist(img.ravel(),256,[0,256]); plt.show()
 hist,bins = np.histogram(img.ravel(),256,[0,256])
 maxi=0
-
 
 for i in range(0,256):
 	if maxi < hist[i]:
 		maxi=hist[i]
 		a=i
+		print(a)
 mini=15654
 
 for j in range(0,256):
 	if mini >= hist[j]:
 		mini=hist[j]
 		b=j
-
 print(hist)
 print(a)
 print(b)
 print(mini)
 print(maxi)
 
-lena = misc.imread('Grayscale.png','L')
+lena = imageio.imread('Grayscale.png')
+print("lena shape")
 print(lena.shape)
 embed = np.zeros(shape=(512,512))
 
@@ -36,19 +36,19 @@ for i in range(512):
 	for j in range(512):
 		embed[i][j]=lena[i][j]
 
-#print(embed)
+print(embed)
 
 for i in range(512):
 	for j in range(512):
 		if embed[i][j]>=155 and embed[i][j]<255:
 			embed[i,j] = embed[i][j]+1
 
-#print(embed)
+print("after edit embed is")
+print(embed)
 
-strp="hello" #secret message
+strp="veren" #secret message
 m =''.join(format(ord(x),'08b') for x in strp)
-k=m[0]
-print(m)
+print("m is\n" + m)
 #print(b[0])
 ind=0
 def str_to_bin(string):
@@ -58,7 +58,7 @@ def str_to_bin(string):
 		a=a+format(ord(i),'08b')
 	print(a)
 
-str_to_bin("hello")
+str_to_bin("veren")
 
 
 #print(m)
@@ -84,8 +84,8 @@ for i in range(512):
 
 
 				
-
-#print(embed)
+print("after second edit embed is")
+print(embed)
 
 imgl= Image.fromarray(embed).convert('L')
 imgl.save('my.png')

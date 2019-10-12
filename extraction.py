@@ -1,10 +1,10 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-from scipy import misc
+import imageio
 from PIL import Image
 
-lena = misc.imread('my.png')
+lena = imageio.imread('my.png')
 print(lena.shape)
 extract = np.zeros(shape=(512,512))
 
@@ -28,8 +28,8 @@ for i in range(512):
 			msg=msg+'0'
 			ptr1=ptr1+1
 
-
-                       
-
+def decode_binary_string(s):
+    return ''.join(chr(int(s[i*8:i*8+8],2)) for i in range(len(s)//8))
 
 print(msg)
+print (decode_binary_string(msg))
